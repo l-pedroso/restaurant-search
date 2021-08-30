@@ -25,13 +25,13 @@ export const Logo = styled.img`
 margin-bottom: 15px;
 `;
 
-export const Map = styled.div`
+export const MapContainer = styled.div`
 flex: 3;
 `;
 
 export const Carousel = styled(Slider)`
 .slick-slide{
-    margin-right: 16px;
+    margin-right: 30px;
 }
 `;
 
