@@ -77,7 +77,7 @@ const Home = () => {
             <Modal open={modalOpened} onClose={() => setModalOpened(!modalOpened)} >
                 <p>{restaurantSelected?.name}</p>
                 <p>{restaurantSelected?.formatted_phone_number}</p>
-                <p>{restaurantSelected?.formated_address}</p>
+                <p>{restaurantSelected?.formated_address }</p>
             </Modal>
 
         </Wrapper>
