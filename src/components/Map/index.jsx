@@ -66,7 +66,7 @@ export const MapContainer = (props) => {
 
     function searchNearby(map, center) {
         const service = new google.maps.places.PlacesService(map);
-
+        dispatch(setRestaurants([]));
         const request = {
             location: center,
             radius: '5000',

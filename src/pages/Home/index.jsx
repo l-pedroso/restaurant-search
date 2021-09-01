@@ -5,7 +5,7 @@ import TextField, { Input } from '@material/react-text-field';
 import MaterialIcon from '@material/react-material-icon';
 import theme from '../../theme';
 import restaurante from '../../assets/restaurante-fake.png'
-import { Card, RestaurantCard, Modal, Map } from '../../components';
+import { Card, RestaurantCard, Modal, Map, Loader, Skeleton } from '../../components';
 import { useSelector } from "react-redux";
 
 const Home = () => {
@@ -54,14 +54,19 @@ const Home = () => {
                             onKeyPress={hadleKeyPress}
                             onChange={(e) => setInputValue(e.target.value)} />
                     </TextField>
-                    <CarrouselTitle theme={theme}>Na sua área</CarrouselTitle>
-                    <Carousel {...settings}>
-                        {restaurants.map((restaurant) => (<Card
-                            photo={restaurant.photos ? restaurant.photos[0].getUrl() : restaurante}
-                            title={restaurant.name}
-                            key={restaurant.place_id}
-                        />))}
-                    </Carousel>
+                    {console.log(restaurants.lenght)}
+                    {restaurants.length > 0 ? (
+                        <>
+                            <CarrouselTitle theme={theme}>Na sua área</CarrouselTitle>
+                            <Carousel {...settings}>
+                                {restaurants.map((restaurant) => (<Card
+                                    photo={restaurant.photos ? restaurant.photos[0].getUrl() : restaurante}
+                                    title={restaurant.name}
+                                    key={restaurant.place_id}
+                                />))}
+                            </Carousel>
+                        </>
+                    ) : <Loader />}
                 </Search>
                 {restaurants.map((restaurant) => (
                     <RestaurantCard
@@ -75,11 +80,26 @@ const Home = () => {
                 <Map query={query} placeId={placeId} />
             </MapContainer>
             <Modal open={modalOpened} onClose={() => setModalOpened(!modalOpened)} >
-                <p>{restaurantSelected?.name}</p>
-                <p>{restaurantSelected?.formatted_phone_number}</p>
-                <p>{restaurantSelected?.formated_address }</p>
+                {restaurantSelected ? (
+                    <>
+                        <p size="large">{restaurantSelected?.name}</p>
+                        <p size="medium">{restaurantSelected?.formatted_phone_number}</p>
+                        <p size="medium">{restaurantSelected?.formatted_address}</p>
+                        <p size="medium">
+                            {restaurantSelected?.opening_hours?.open_now
+                                ? 'Aberto agora :)'
+                                : 'Fechado neste momento :('}
+                        </p>
+                    </>
+                ) : (
+                    <>
+                        <Skeleton width="10px" height="10px" />
+                        <Skeleton width="10px" height="10px" />
+                        <Skeleton width="10px" height="10px" />
+                        <Skeleton width="10px" height="10px" />
+                    </>
+                )}
             </Modal>
-
         </Wrapper>
     );
 }
